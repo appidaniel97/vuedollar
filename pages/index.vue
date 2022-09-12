@@ -12,11 +12,10 @@
     </body>   
 </template>
 
-
-
 <script>
 let senior;
 let dolarDecimal;
+var ok;
 import axios from 'axios';
 //import Vue from 'Vue'
 
@@ -30,70 +29,31 @@ export default{
             console.log(response.data.USDBRL['bid'],"RECEBAAAAAAAA")
             senior = response.data.USDBRL['bid']
             dolarDecimal = senior;
+            ok = senior;
             console.log(dolarDecimal,"DOMMMMMMMMMMM")
             return response.data
         })
-        return { getApi }
+        return { 
+            titulo: 'testando' + senior,
+            reais: senior
+            //getApi,
+
+        }
         
     },   
-    
-  data(){
-    return{
-        titulo: dolarDecimal
-        
-    }
-  }
+//  data(){
+//    return{
+//        titulo: 'dolarDecimal ' + ok,
+//        reais: 'oi'
+//    }
+//  }
 }
-//export default {
-//    async asyncData(){
-//        const api = 'http://economia.awesomeapi.com.br/last/USD-BRL'
-//        const getApi = await axios.get(api).then((response) =>{
-//            console.log(response)
-             
-//            console.log(response.data,"TOMAAAAAAAAAAA")
-//            console.log(response.data.USDBRL['bid'],"RECEBAAAAAAAA")
-//            senior = response.data.USDBRL['bid']
-//            dolarDecimal = senior;
-//            return response.data
-//        })
-//        return { getApi }
-//    },   
-//    methods:{
-//        md() {        
-//            this.$refs.dan = 'Hello Bro';
-//        }
-//    }
-//}
-
-
-//new Vue({
-//    el: '#formMod',
-//    data: { 
-//          message:"Welcome"
-//      },
-//      methods:{
-//        handleGetQuotation:  this.$refs.reais.innerText = 'Hello Bro'
-//    }
-//});
-
-//function cotacao(){
-//    dolarDecimal = Number.parseFloat(senior).toFixed(2);
-//    document.getElementById("reais").value = dolarDecimal;
-//}
-
-
-//function handleGetQuotation(value){
-//    document.getElementById("reais").value = Number.parseFloat(value * dolarDecimal).toFixed(2);
-//    console.log(value * dolarDecimal);
-//}
-
-//function handleGetDol(value){
-//    document.getElementById("dolar").value = Number.parseFloat(value / dolarDecimal).toFixed(2);
-//    console.log(value / dolarDecimal,"teste");
-//    console.log(value, "reais")
-//}
-
-//cotacao()
+function cotacao(){
+    //let json = JSON.parse(getCotacao(url));
+    //dolarDecimal = Number.parseFloat(json.USDBRL['bid']).toFixed(2);
+   
+}
+cotacao()
 </script>
 
 <style>
