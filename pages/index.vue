@@ -22,7 +22,7 @@ import axios from 'axios';
 console.log("nao")
 export default{
         async asyncData(){
-        const api = 'http://economia.awesomeapi.com.br/last/USD-BRL'
+        const api = 'https://economia.awesomeapi.com.br/last/USD-BRL'
         const getApi = await axios.get(api).then((response) =>{
             console.log(response)
              
