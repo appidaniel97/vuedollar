@@ -1,0 +1,1 @@
+__NUXT_JSONP__("/", {data:[{titulo:"testando5.093"}],fetch:{},mutations:void 0});
