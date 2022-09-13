@@ -19,6 +19,7 @@ var ok;
 import axios from 'axios';
 //import Vue from 'Vue'
 
+console.log("nao")
 export default{
         async asyncData(){
         const api = 'http://economia.awesomeapi.com.br/last/USD-BRL'
@@ -37,7 +38,6 @@ export default{
             titulo: 'testando' + senior,
             reais: senior
             //getApi,
-
         }
         
     },   
