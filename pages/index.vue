@@ -2,58 +2,54 @@
     <body class="gradient">
     <div class="formMod">
             <img src="onedollar.png"/>
-            <h1>Dolar</h1>
-            <input onClick="this.setSelectionRange(0, this.value.length)" onkeyup="handleGetQuotation(this.value)" type="text" id="dolar" value="1.00"/>
-            <h3>Vale</h3>
-            <input onClick="this.setSelectionRange(0, this.value.length)" onkeyup="handleGetDol(this.value)" type="text" id="reais"  />
-            <h3>Reais</h3>        
-            <h1>{{ titulo }}</h1>     
+            <h2>Dolares</h2>
+            <input type="text" v-model="dollars" />
+            <h2>Vale</h2>
+            <input type="text" v-model="reals" />
+            <h2>Reais</h2>   
     </div>      
     </body>   
 </template>
 
 <script>
-let senior;
-let dolarDecimal;
-var ok;
 import axios from 'axios';
-//import Vue from 'Vue'
 
-console.log("nao")
-export default{
-        async asyncData(){
-        const api = 'https://economia.awesomeapi.com.br/last/USD-BRL'
-        const getApi = await axios.get(api).then((response) =>{
-            console.log(response)
-             
-            console.log(response.data,"TOMAAAAAAAAAAA")
-            console.log(response.data.USDBRL['bid'],"RECEBAAAAAAAA")
-            senior = response.data.USDBRL['bid']
-            dolarDecimal = senior;
-            ok = senior;
-            console.log(dolarDecimal,"DOMMMMMMMMMMM")
-            return response.data
-        })
-        return { 
-            titulo: 'testando' + senior,
-            reais: senior
-            //getApi,
+export default {
+    async asyncData(){
+        const api = 'https://economia.awesomeapi.com.br/last/USD-BRL';
+        const { USDBRL: data } = await axios.get(api).then((response) => {
+            return response.data;
+        }).catch((err) => {
+            console.error(err);
+        });
+
+        let { bid: currentQuotation } = data;
+        currentQuotation = Number.parseFloat(currentQuotation).toFixed(2);
+
+        return {
+            dollars: Number.parseFloat(1.00).toFixed(2),
+            currentQuotation: currentQuotation,
+            reals: Number.parseFloat(currentQuotation * 1.00).toFixed(2)
         }
-        
-    },   
-//  data(){
-//    return{
-//        titulo: 'dolarDecimal ' + ok,
-//        reais: 'oi'
-//    }
-//  }
+    },
+
+    watch: {
+        reals: function() {
+            if (!Number.isNaN(this.reals)) {
+                this.dollars = this.reals / this.currentQuotation;
+            } else {
+                this.dollars = '';
+            }
+        },
+        dollars: function() {
+            if (!Number.isNaN(this.dollars)) {
+                this.reals = this.dollars * this.currentQuotation;
+            } else {
+                this.reals = '';
+            }
+        }
+    }
 }
-function cotacao(){
-    //let json = JSON.parse(getCotacao(url));
-    //dolarDecimal = Number.parseFloat(json.USDBRL['bid']).toFixed(2);
-   
-}
-cotacao()
 </script>
 
 <style>
