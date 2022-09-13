@@ -36,14 +36,14 @@ export default {
     watch: {
         reals: function() {
             if (!Number.isNaN(this.reals)) {
-                this.dollars = this.reals / this.currentQuotation;
+                this.dollars = Number.parseFloat(this.reals / this.currentQuotation).toFixed(2);
             } else {
                 this.dollars = '';
             }
         },
         dollars: function() {
             if (!Number.isNaN(this.dollars)) {
-                this.reals = this.dollars * this.currentQuotation;
+                this.reals = Number.parseFloat(this.dollars * this.currentQuotation).toFixed(2);
             } else {
                 this.reals = '';
             }
