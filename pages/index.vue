@@ -3,9 +3,10 @@
     <div class="formMod">
             <img src="onedollar.png"/>
             <h2>Dolares</h2>
-            <input type="text" v-model="dollars" />
+            <money onClick="this.setSelectionRange(0, this.value.length)" v-model="priceDollar" v-bind="moneyD"></money>
             <h2>Vale</h2>
-            <input type="text" v-model="reals" />
+            <money onClick="this.setSelectionRange(0, this.value.length)" v-model="priceReal" v-bind="moneyR"></money>
+            <!--//onClick="this.setSelectionRange(0, this.value.length)"-->
             <h2>Reais</h2>   
     </div>      
     </body>   
@@ -13,8 +14,10 @@
 
 <script>
 import axios from 'axios';
+import {Money} from 'v-money'
 
 export default {
+    components: {Money},
     async asyncData(){
         const api = 'https://economia.awesomeapi.com.br/last/USD-BRL';
         const { USDBRL: data } = await axios.get(api).then((response) => {
@@ -27,28 +30,45 @@ export default {
         currentQuotation = Number.parseFloat(currentQuotation).toFixed(2);
 
         return {
-            dollars: Number.parseFloat(1.00).toFixed(2),
             currentQuotation: currentQuotation,
-            reals: Number.parseFloat(currentQuotation * 1.00).toFixed(2)
+            priceDollar: Number.parseFloat(1.00).toFixed(2),
+            priceReal: Number.parseFloat(currentQuotation * 1.00).toFixed(2),
+
+            moneyD: {
+                decimal: ',',
+                thousands: '.',
+                prefix: 'US$ ',
+                //suffix: ' #',
+                precision: 2,
+                masked: false
+            },
+            moneyR: {
+                decimal: ',',
+                thousands: '.',
+                prefix: 'R$ ',
+                //suffix: ' #',
+                precision: 2,
+                masked: false
+            }            
         }
     },
 
     watch: {
-        reals: function() {
-            if (!Number.isNaN(this.reals)) {
-                this.dollars = Number.parseFloat(this.reals / this.currentQuotation).toFixed(2);
+        priceReal: function() {
+            if (!Number.isNaN(this.priceReal)) {
+                this.priceDollar = Number.parseFloat(this.priceReal / this.currentQuotation).toFixed(2);
             } else {
-                this.dollars = '';
+                this.priceDollar = '';
             }
         },
-        dollars: function() {
-            if (!Number.isNaN(this.dollars)) {
-                this.reals = Number.parseFloat(this.dollars * this.currentQuotation).toFixed(2);
+        priceDollar: function() {
+            if (!Number.isNaN(this.priceDollar)) {
+                this.priceReal = Number.parseFloat(this.priceDollar * this.currentQuotation).toFixed(2);
             } else {
-                this.reals = '';
+                this.priceReal = '';
             }
         }
-    }
+    },
 }
 </script>
 
