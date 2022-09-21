@@ -5,8 +5,8 @@ export default {
     ssr: false,
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    titleTemplate: '%s - vuedollar',
-    title: 'vuedollar',
+    titleTemplate: '%s - Dolar Hoje',
+    title: 'Dolar Hoje',
     htmlAttrs: {
       lang: 'en'
     },
